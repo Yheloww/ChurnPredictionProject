@@ -16,7 +16,7 @@ churn.drop(['class 1', 'class 2','CLIENTNUM'], axis=1, inplace=True)
 # replacing categorical values for logical int
 churn = churn.replace(['Existing Customer','Married'], 1)
 churn = churn.replace(['Attrited Customer','Single'], 0)
-churn = churn.replace(['Attrited Customer','Divorced'], 2)
+churn = churn.replace(['Divorced'], 2)
 churn = churn.replace(['Uneducated','High School','College','Graduate','Post-Graduate','Doctorate'], [0,1,2,3,4,5])
 churn = churn.replace(['Less than $40K','$40K - $60K','$60K - $80K','$80K - $120K','$120K +'], [0,1,2,3,4])
 churn = churn.replace(['Blue','Silver','Gold','Platinum'], [0,1,2,3])
