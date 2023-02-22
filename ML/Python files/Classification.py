@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
 
 import pickle
 
@@ -26,8 +28,8 @@ def open_X_y(path: str):
     less = churn.reindex(sorted(churn.columns), axis=1)
     print(less.columns)
     #divide to feature and results
-    X = less.drop('Attrition_Flag',axis=1)
-    y = less['Attrition_Flag']
+    X = less.drop('Attrition_Flag',axis=1).values
+    y = less['Attrition_Flag'].values
     print('opened')
     return X,y
 
@@ -43,9 +45,9 @@ def model(X : np.array,y : np.array):
     """
     """
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
-
+    
     steps=[("scale", StandardScaler()),
-       ("model", DecisionTreeClassifier(random_state=45, max_depth=7,criterion='gini', max_features=None))]
+        ("model", DecisionTreeClassifier(random_state=45, max_depth=7,criterion='gini', max_features=None))]
 
     pipe = Pipeline(steps)
     print('pipe step')
@@ -54,7 +56,8 @@ def model(X : np.array,y : np.array):
     pickle.dump(pipe, open('../Models/Tree_Class.pkl', 'wb'))
     #print score
     print(pipe.score(X_test,y_test))
-
+    new_X = (np.array([700,777,5,1.0,500,5,100,20])).reshape(-1, 8)
+    print(pipe.predict_proba(new_X))
     return pipe 
 
 

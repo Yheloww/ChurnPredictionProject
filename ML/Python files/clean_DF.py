@@ -3,7 +3,7 @@ import numpy as np
 
 # open csv
 churn = pd.read_csv('./BankChurners.csv')
-churned = pd.read_csv('./clusters.csv')
+#churned = pd.read_csv('../Data/clusters.csv')
 
 # replace and get rid of nan 
 def clean_nan(data : pd.DataFrame): 
@@ -42,5 +42,5 @@ def replace(data):
     data= pd.get_dummies(data, columns=['Gender'])
     return data 
 
-(save(col(clean_nan(churned)), 'Cleaned_clusters_Unknown.csv')).head()
-#(save(replace(col(clean_nan(churn))), 'Cleaned_ML_Unknonw.csv')).head()
+#(save(col(clean_nan(churned)), 'Cleaned_clusters_Unknown.csv')).head()
+print((save(col(clean_nan(churn)), 'Cleaned_ML_Unknonw.csv')).head())
