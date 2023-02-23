@@ -1,0 +1,4 @@
+FROM mongo
+
+COPY bankchurners.csv /bankchurners.csv
+CMD mongoimport --db=bankChurners --collection=clients --type=csv --file=bankchurners.csv --headerline
