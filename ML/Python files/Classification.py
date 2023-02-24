@@ -49,7 +49,7 @@ def split(X: np.array, y: np.array):
 def sampling(X: np.array, y: np.array):
     """
     """
-    ros = RandomOverSampler(sampling_strategy="not majority")
+    ros = RandomOverSampler(sampling_strategy="not majority", random_state=42)
     X_ros, y_ros = ros.fit_resample(X,y)
 
     return X_ros,y_ros
@@ -60,9 +60,8 @@ def model(X : np.array,y : np.array,path_model : str):
     X_train, X_test, y_train, y_test = split(X,y)
 
     X_train, y_train = sampling(X_train,y_train)
-
     steps=[("scale", StandardScaler()),
-        ("model", DecisionTreeClassifier(random_state=45, max_depth=7,criterion='gini', max_features=None))]
+        ("model", DecisionTreeClassifier(random_state=45, max_depth=6,criterion='gini', max_features=None))]
 
     pipe = Pipeline(steps)
 
@@ -74,9 +73,13 @@ def model(X : np.array,y : np.array,path_model : str):
     print(pipe.score(X_test,y_test))
     #print(classification_report(y_test, y_pred))
     # test of prediction
-    new_X = (np.array([200,777,10,1.0,1000,5,100,20])).reshape(-1, 8)
-    print(pipe.predict(new_X))
-    print(pipe.predict_proba(new_X))
+    new_X = (np.array([20, 100, 30, 500, 50, 2.500, 20, 40])).reshape(-1, 8)
+    predict = pipe.predict(new_X).tolist()
+    proba = pipe.predict_proba(new_X).tolist()
+    proba = proba[0][0]
+    print(f"The customer has a {round(proba*100)} % chance of churning")
+
+    #print(f"It is an {predict} and the probability is {proba}")
 
     return pipe
 
@@ -85,5 +88,3 @@ cluster_model = '../Models/Clusters_Class.pkl'
 
 X,y = open_X_y(PATH, 'Attrition_Flag')
 model(X,y, chrun_model)
-X_cluster, y_cluster = open_X_y(PATH, 'cluster')
-model(X_cluster, y_cluster, cluster_model)
