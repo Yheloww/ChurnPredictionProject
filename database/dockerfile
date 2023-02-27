@@ -1,4 +1,11 @@
 FROM mongo
 
 COPY bankchurners.csv /bankchurners.csv
-CMD mongoimport --db=bankChurners --collection=clients --type=csv --file=bankchurners.csv --headerline
+
+CMD mongoimport --host mongodb --db churn_prediction_db --collection clients --type csv --headerline --file /bankchurners.csv
+
+#docker build -t bankchurners_db_image .
+
+#docker run --name bankchurners_db_container -d -p 27017:27017 bankchurners_db_image
+
+
