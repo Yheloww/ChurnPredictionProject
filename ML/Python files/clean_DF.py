@@ -43,4 +43,4 @@ def replace(data):
     return data 
 
 #(save(col(clean_nan(churned)), 'Cleaned_clusters_Unknown.csv')).head()
-print((save(col(clean_nan(replace(churn))), 'Cleaned_ML_Unknonw.csv')).head())
+save(col(clean_nan(churn)),'cleaned_df.csv')

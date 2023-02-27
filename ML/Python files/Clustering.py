@@ -7,7 +7,7 @@ import pickle
 
 import pandas as pd
 
-PATH = './Cleaned_ML_Unknonw.csv'
+PATH = './cleaned_df.csv'
 
 def open_df(PATH : str):
     """
@@ -28,7 +28,7 @@ def pipeline(data : pd.DataFrame, path_model: str):
     preprocess = ColumnTransformer(
         [
         ("Scaling", StandardScaler(), int_cols),
-        ("OneHot", OneHotEncoder(sparse=True), cat_cols)
+        ("OneHot", OneHotEncoder(sparse_output=True), cat_cols)
         ]
     )
 
@@ -36,7 +36,7 @@ def pipeline(data : pd.DataFrame, path_model: str):
     # pipeline 
     steps = [
         ("preprocess" , preprocess),
-        ("PCA" , PCA(n_components=20)),
+        ("PCA" , PCA(n_components=2)),
         ("model", model)
     ]
     pipe = Pipeline(steps)
@@ -47,8 +47,17 @@ def pipeline(data : pd.DataFrame, path_model: str):
     cluster_labels = pd.Series(model.labels_, name='cluster')
     data = data.join(cluster_labels.to_frame())
     data.to_csv('./clusters_3.csv')
+    return data
+
+def percentages(df : pd.DataFrame):
+    """
+    """
+    df = df.groupby('cluster')['Attrition_Flag'].value_counts(normalize=True).mul(100).round(1).astype(str) + '%'
+    print(df)
+    return df
 
 # sepcifying path for the pickle model
 clustering_model = '../Models/Churn_cluster_3.pkl'
 
-pipeline(open_df(PATH), clustering_model)
+data = pipeline(open_df(PATH), clustering_model)
+percentages(data)

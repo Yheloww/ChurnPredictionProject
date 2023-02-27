@@ -22,10 +22,14 @@ def open_X_y(path: str, class_name : str):
     churn = pd.read_csv(path)
     churn.drop(['Unnamed: 0'], axis=1, inplace=True)
     # selecting only important features
-    churn = churn[['Attrition_Flag','Total_Trans_Ct', 'Total_Revolving_Bal', 'Total_Relationship_Count',
+    if class_name == 'Attrition_Flag':
+        churn = churn[['Attrition_Flag','Total_Trans_Ct', 'Total_Revolving_Bal', 'Total_Relationship_Count',
                     'Total_Amt_Chng_Q4_Q1', 'Total_Trans_Amt', 'Total_Ct_Chng_Q4_Q1', 'Avg_Open_To_Buy', 'Customer_Age']]
-        
-    churn = churn.dropna()
+    else : 
+        churn = churn[['cluster','Total_Trans_Ct', 'Total_Revolving_Bal', 'Total_Relationship_Count',
+                        'Total_Amt_Chng_Q4_Q1', 'Total_Trans_Amt', 'Total_Ct_Chng_Q4_Q1', 'Avg_Open_To_Buy', 'Customer_Age']]
+        churn = churn.dropna()
+
     less = churn.reindex(sorted(churn.columns), axis=1)
 
     #divide to feature and results
@@ -69,12 +73,26 @@ def model(X : np.array,y : np.array,path_model : str):
     # test of prediction
     new_X = (np.array([20, 100, 30, 500, 50, 2.500, 20, 40])).reshape(-1, 8)
     proba = pipe.predict_proba(new_X).tolist()
+    prediction = pipe.predict(new_X)
+    #print(classification_report(y_test, prediction))
+    pred = prediction[0]
+    if pred == 0: 
+        pourcent = 6.0
+    elif pred == 1:
+        pourcent = 8.7
+    else :
+        pourcent = 33.8
     proba = proba[0][0]
-    print(f"The customer has a {round(proba*100)} % chance of churning")
+    print(f"The customer is from the cluster {pred}, and then has {pourcent}% chance of churning")
 
     return pipe
 
-chrun_model = '../Models/Churn_class.pkl'
+def percentage(df):
+    """
+    """
 
-X,y = open_X_y(PATH, 'Attrition_Flag')
+
+chrun_model = '../Models/Churn_class.pkl'
+chrun_model = '../Models/test_cluster_class.pkl'
+X,y = open_X_y(PATH, 'cluster')
 model(X,y, chrun_model)
