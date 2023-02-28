@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-import os 
+import os
 import pickle
 import pandas as pd
 import numpy as np
@@ -21,15 +21,24 @@ def prediction():
    if (request.method == 'POST'):
       datas.update(request.form.to_dict())
 
-      with open(os.path.join(os.path.abspath('models'), 'Churn_class.pkl'), 'rb') as f:
+      with open(os.path.join(os.path.abspath('deployment/models'), 'test_cluster_class.pkl'), 'rb') as f:
             model = pickle.load(f)
 
-      
-      
-      proba = model.predict_proba(pd.DataFrame.from_dict([datas])).tolist()
+      prediction = model.predict(pd.DataFrame.from_dict([datas]))
+      pred = prediction[0]
+      if pred == 0: 
+        pourcent = 6.0
+      elif pred == 1:
+        pourcent = 8.7
+      else :
+        pourcent = 33.8
+      datas = f"The customer is from the cluster {pred}, and then has {pourcent}% chance of churning"
+
+
+      '''proba = model.predict_proba(pd.DataFrame.from_dict([datas])).tolist()
       proba = proba[0][0]
       datas = f"The customer has a {round(proba*100)} % chance of churning"
-      '''datas = model.predict(pd.DataFrame.from_dict([datas]))
+      datas = model.predict(pd.DataFrame.from_dict([datas]))
       if(datas==1):
          datas = np.append(datas, "Churn")
       else:
