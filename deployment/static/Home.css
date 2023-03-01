@@ -1,0 +1,50 @@
+.u-section-1 {
+    background-image: linear-gradient(0deg, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url("https://assets.nicepagecdn.com/aecb7ca1/4175732/images/cea5bbb4fd6723ed8266715fdc1d821462532b32553c7d2e13d9086b903471b8e048aa501cf64899993ef50df606a4d3e48e66739d85562f6313a5_1280.jpg");
+    background-position: 50% 50%;
+  }
+  
+  .u-section-1 .u-sheet-1 {
+    min-height: 800px;
+  }
+  
+  .u-section-1 .u-text-1 {
+    margin: 60px auto 0;
+  }
+  
+  .u-section-1 .u-text-2 {
+    margin: 30px 157px 60px;
+  }
+  
+  @media (max-width: 1199px) {
+    .u-section-1 .u-sheet-1 {
+      min-height: 660px;
+    }
+  
+    .u-section-1 .u-text-2 {
+      margin-left: 57px;
+      margin-right: 57px;
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .u-section-1 .u-sheet-1 {
+      min-height: 506px;
+    }
+  
+    .u-section-1 .u-text-2 {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .u-section-1 .u-sheet-1 {
+      min-height: 380px;
+    }
+  }
+  
+  @media (max-width: 575px) {
+    .u-section-1 .u-sheet-1 {
+      min-height: 239px;
+    }
+  }
