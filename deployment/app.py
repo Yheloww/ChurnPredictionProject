@@ -26,7 +26,7 @@ def prediction():
    if (request.method == 'POST'):
       datas.update(request.form.to_dict())
 
-      with open(os.path.join(os.path.abspath('deployment/models'), 'test_cluster_class.pkl'), 'rb') as f:
+      with open('./models/test_cluster_class.pkl', 'rb') as f:
             model = pickle.load(f)
 
       prediction = model.predict(pd.DataFrame.from_dict([datas]))
