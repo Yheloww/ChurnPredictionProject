@@ -26,28 +26,13 @@ def prediction():
    if (request.method == 'POST'):
       datas.update(request.form.to_dict())
 
-      with open('./models/test_cluster_class.pkl', 'rb') as f:
+      with open('./models/Churn_cluster_3_final.pkl', 'rb') as f:
             model = pickle.load(f)
 
-      prediction = model.predict(pd.DataFrame.from_dict([datas]))
-      pred = prediction[0]
-      if pred == 0: 
-        pourcent = 6.0
-      elif pred == 1:
-        pourcent = 8.7
-      else :
-        pourcent = 33.8
-      datas = f"The customer is from the cluster {pred}, and then has {pourcent}% chance of churning"
-
-
-      '''proba = model.predict_proba(pd.DataFrame.from_dict([datas])).tolist()
-      proba = proba[0][0]
-      datas = f"The customer has a {round(proba*100)} % chance of churning"
-      datas = model.predict(pd.DataFrame.from_dict([datas]))
-      if(datas==1):
-         datas = np.append(datas, "Churn")
-      else:
-         datas = np.append(datas, "Not churn")'''
+      prediction = model.predict(pd.DataFrame.from_dict([datas]))[0]
+      dict_percentages = {0: 8.1, 1 : 5.3, 2 : 30.1}
+      perc = dict_percentages[prediction]
+      datas = f'the client is from cluster {prediction} then his probability of churning is {perc} %'
 
       return render_template("Predict.html", result=datas)
    

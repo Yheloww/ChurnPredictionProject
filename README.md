@@ -5,6 +5,15 @@ An application that predict if a client will churn and show datas about each cli
 ## Deployment
 
 Build an API on the "app.py" fill using flask. This API contains 3 pages : Home, Predict, Dashboard. 
+* Home :
+![Alt text](assets/Home.png)  
+
+* Predict :
+![Alt text](assets/Predict.png)  
+
+* Dashboard : 
+![Alt text](assets/Dashboard.png)  
+
 Predict has a form to enter information about a client then return the chance of this client to churn and his cluster category.
 Dashboard show a page with a lot of usefull informations about the database of clients.
 
@@ -16,7 +25,7 @@ To create a Docker image with the dockerfile, you need to use these commands on 
 
 ### models
 
-Contains all the model used for the prediction
+Contains the model used for the prediction
 
 ### static
 
