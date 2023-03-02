@@ -8,6 +8,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
+from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
+
+import matplotlib.pyplot as plt
 
 import pickle
 
@@ -60,7 +63,7 @@ def model(X : np.array,y : np.array,path_model : str):
     X_train, y_train = sampling(X_train,y_train)
     # setting up the steps for the pipeline
     steps=[("scale", StandardScaler()),
-        ("model", DecisionTreeClassifier(random_state=45, max_depth=6,criterion='gini', max_features=None))]
+        ("model", DecisionTreeClassifier(random_state=45, max_depth=7,criterion='gini', max_features=None))]
     # training the model
     pipe = Pipeline(steps)
     pipe.fit(X_train, y_train)
@@ -68,7 +71,13 @@ def model(X : np.array,y : np.array,path_model : str):
     pickle.dump(pipe, open( path_model, 'wb'))
     # print the score of the model
     print(pipe.score(X_test,y_test))
-    
+    y_pred = pipe.predict(X_test)
+    cm = confusion_matrix(y_test, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+    disp.plot()
+    plt.show()
+    print(classification_report(y_test, y_pred))
+
     return pipe 
 
 def prediction(pipe):
