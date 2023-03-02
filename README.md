@@ -3,7 +3,20 @@
 An application that predict if a client will churn and show datas about each client.
 
 ## Data analysis 
-Heritier's part
+
+Tableau link: https://public.tableau.com/app/profile/heritie.kassanzi/viz/ClientDashboard_16775975534410/Dashboard1?publish=yes
+
+Hereby I would like to give a brief explanation of my dashboard. It is divided into several charts:
+
+Marital Status Cluster: This graph shows the number of transactions by gender and relationship status, broken down into the different relationship statuses.
+
+Transactions: This barchart shows the average transaction amounts per cluster, divided between "Attrited Customer" and "Existing Customer".
+
+Card Category: Here is shown how many months the clients were inactive per cluster and per card category. Again, this can be compared between "Attrited Customer" and "Existing Customer".
+
+Total Transaction By Cluster: As the name implies, this chart shows the average number of transactions per cluster.
+
+Overview: In this graph, I use a parameter to keep the overview. Here different things are displayed interactively depending on the option selected. Again, a distinction is made between "Attrited Customer" and "Existing Customer".
 
 
 
