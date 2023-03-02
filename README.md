@@ -19,7 +19,7 @@ Dashboard show a page with a lot of usefull informations about the database of c
 
 The site has been deployed on Render at this address : https://churn-prediction-app.onrender.com.
 
-To see the API locally, you can run the "app.py" program in the deployement folder and put the local url the terminal will give you on your browser (http://127.0.0.1:5000)
+To see the API locally, you can run the "app.py" program in the "deployment" folder and put the local url the terminal will give you on your browser (http://127.0.0.1:5000)
 
 To create a Docker image with the dockerfile, you need to use these commands on your terminal in the "deployment" folder : 
 * docker build -t churn_prediction_app .
