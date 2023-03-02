@@ -1,7 +1,11 @@
  .u-section-1 {
   background-image: linear-gradient(white, #333333);
+  display: flex;
+  justify-content: center;
 }
 
 .u-section-1 .u-sheet-1 {
+  width: 100%;
   min-height: 400px;
+  margin : 5px;
 }

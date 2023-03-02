@@ -30,7 +30,7 @@ def prediction():
             model = pickle.load(f)
 
       prediction = model.predict(pd.DataFrame.from_dict([datas]))[0]
-      dict_percentages = {0: 8.1, 1 : 5.3, 2 : 30.1}
+      dict_percentages = {0: 30.1, 1 : 8.1, 2 : 5.3}
       perc = dict_percentages[prediction]
       datas = f'the client is from cluster {prediction} then his probability of churning is {perc} %'
 
