@@ -5,23 +5,24 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 import pickle
 
-import numpy as np 
+import numpy as np
 import pandas as pd
 
 PATH = './cleaned_df.csv'
 
-def open_df(PATH : str):
+
+def open_df(PATH: str):
     """
     """
     data = pd.read_csv(PATH)
     # choosing only important features
     features = data[['Total_Trans_Ct', 'Total_Revolving_Bal', 'Total_Relationship_Count',
-                   'Total_Amt_Chng_Q4_Q1', 'Total_Trans_Amt', 'Total_Ct_Chng_Q4_Q1', 'Avg_Open_To_Buy', 'Customer_Age']]
+                     'Total_Amt_Chng_Q4_Q1', 'Total_Trans_Amt', 'Total_Ct_Chng_Q4_Q1', 'Avg_Open_To_Buy', 'Customer_Age']]
 
     return features
 
 
-def pipeline(data : pd.DataFrame):
+def pipeline(data: pd.DataFrame):
     """
     """
     # separate categorical column and numerical for preprocess
@@ -29,14 +30,14 @@ def pipeline(data : pd.DataFrame):
     # preprocessing step for the pipeline
     preprocess = ColumnTransformer(
         [
-        ("Scaling", StandardScaler(), int_cols),
+            ("Scaling", StandardScaler(), int_cols),
         ]
     )
-    model = KMeans(n_clusters=3,n_init=10,init='k-means++',random_state=1)
-    # pipeline 
+    model = KMeans(n_clusters=3, n_init=10, init='k-means++', random_state=1)
+    # pipeline
     steps = [
-        ("preprocess" , preprocess),
-        ("PCA" , PCA(n_components=2, random_state=1)),
+        ("preprocess", preprocess),
+        ("PCA", PCA(n_components=2, random_state=1)),
         ("model", model)
     ]
     pipe = Pipeline(steps)
@@ -50,18 +51,20 @@ def pipeline(data : pd.DataFrame):
 
     return pipe, data_base
 
-def prediction(pipe,  path_model: str, data : pd.DataFrame):
+
+def prediction(pipe,  path_model: str, data: pd.DataFrame):
     """
     """
     # prediction
     new_X = data.iloc[[55]]
     prediction = pipe.predict(new_X)[0]
-    dict_percentages = {0: 8.1, 1 : 5.3, 2 : 30.1}
+    dict_percentages = {0: 8.1, 1: 5.3, 2: 30.1}
     perc = dict_percentages[prediction]
-    print(f'the client is from cluster {prediction} then his probability of churning is {perc} %')
+    print(
+        f'the client is from cluster {prediction} then his probability of churning is {perc} %')
     # savec pickle
-    pickle.dump(pipe, open( path_model, 'wb'))
-    return 
+    pickle.dump(pipe, open(path_model, 'wb'))
+    return
 
 
 # sepcifying path for the pickle model
